@@ -103,33 +103,11 @@ public abstract class BasicServer {
         // когда пользователь запрашивает localhost:9889
 
         // Сохраняем только статические данные
-        LocalDate today = LocalDate.now();
-        int month = today.getMonthValue();
-        int year = today.getYear();
-        YearMonth currentMonth = YearMonth.of(year, month);
-        int daysInMonth = currentMonth.lengthOfMonth();
-        int currentDay = today.getDayOfMonth();
-        LocalDate firstDayOfMonth = currentMonth.atDay(1);
-        DayOfWeek dayOfWeek = firstDayOfMonth.getDayOfWeek();
-        List<Integer> dayList = IntStream.rangeClosed(1, daysInMonth)
-                .boxed()
-                .collect(Collectors.toList());
 
-        registerGet("/", exchange -> {
-            // Создаем новую мапу для каждого запроса
-            Map<String, Object> freshData = new HashMap<>();
 
-            freshData.put("daysInMonth", dayList);
-            freshData.put("firstDayOfWeek", dayOfWeek.getValue());
-            freshData.put("currentDay", currentDay);
-            freshData.put("month", month);
-            freshData.put("year", year);
 
-            // Всегда читаем свежих пациентов из файла
-            freshData.put("patients", new JsonUtils().readPatients());
+        registerGet("/", exchange -> renderTemplate(exchange, "index.html", null));
 
-            renderTemplate(exchange, "index.ftlh", freshData);
-        });
 
 
         // эти обрабатывают запросы с указанными расширениями
