@@ -106,7 +106,7 @@ public abstract class BasicServer {
 
 
 
-        registerGet("/", exchange -> renderTemplate(exchange, "index.html", null));
+        registerGet("/", exchange -> renderTemplate(exchange, "index.ftlh", null));
 
 
 

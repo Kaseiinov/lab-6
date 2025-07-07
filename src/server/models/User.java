@@ -4,54 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private static final List<User> users = new ArrayList<>();
+
     private String firstName;
     private String lastName;
-    private int age;
     private String email;
     private String password;
-    private List<Book> borrowedBooks = new ArrayList<>();
-    private List<Book> borrowedBooksHistory = new ArrayList<>();
 
-    public User(String firstName, String lastName, int age, String email, String password) {
+    public User() {}
+
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
         this.email = email;
         this.password = password;
     }
 
-    public User() {}
-
-    public void borrowBook(Book book) {
-        borrowedBooks.add(book);
+    public static void addUser(User user){
+        users.add(user);
     }
 
-    public void returnBook(Book book) {
-        borrowedBooks.remove(book);
-    }
-
-    public void setBookToStore(Book book) {
-        borrowedBooksHistory.add(book);
-    }
-
-    public List<Book> getBorrowedBooksHistory() {
-        return borrowedBooksHistory;
-    }
-
-    public void setBorrowedBooksHistory(List<Book> borrowedBooksHistory) {
-        this.borrowedBooksHistory = borrowedBooksHistory;
-    }
-
-    public int getBorrowedBooksCount() {
-        return borrowedBooks.size();
-    }
-
-    public List<Book> getBorrowedBooks() {
-        return borrowedBooks;
-    }
-
-    public void setBorrowedBooks(List<Book> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
+    public static List<User> getUsers() {
+        return users;
     }
 
     public String getFirstName() {
@@ -68,14 +42,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getEmail() {
@@ -96,12 +62,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User {\n" +
-                "  firstName='" + firstName + "',\n" +
-                "  lastName='" + lastName + "',\n" +
-                "  age=" + age + ",\n" +
-                "  email='" + email + "',\n" +
-                "  password='" + password + "'\n" +
-                "}";
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
