@@ -270,4 +270,17 @@ public abstract class BasicServer {
         return route.startsWith("/") ? route : "/" + route;
     }
 
+    public void sendError(HttpExchange exchange, String errorMessage) {
+        try {
+            String response = "<html><body><h2>Ошибка:</h2><p>" + errorMessage + "</p></body></html>";
+            exchange.getResponseHeaders().set("Content-Type", "text/html");
+            exchange.sendResponseHeaders(400, response.getBytes().length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

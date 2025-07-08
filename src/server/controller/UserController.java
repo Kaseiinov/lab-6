@@ -36,6 +36,7 @@ public class UserController extends BasicServer {
         String raw = getBody(exchange);
         Map<String, String> parsed = Utils.parseUrlEncoded(raw, "&");
         User newUser = new User();
+        newUser.setId(User.getUsers().size()+1L);
         newUser.setEmail(parsed.get("email"));
         newUser.setPassword(parsed.get("user-password"));
         newUser.setFirstName(parsed.get("user-firstName"));
@@ -50,7 +51,6 @@ public class UserController extends BasicServer {
             User.addUser(newUser);
             redirect(exchange, "/login");
         }
-        User.getUsers().forEach(e -> System.out.println("registered -> " + e.getEmail()));
     }
 
     private void registerGet(HttpExchange exchange){
@@ -82,7 +82,7 @@ public class UserController extends BasicServer {
         }
 
         if (user.get().getPassword().equals(parsed.get("user-password"))) {
-            Cookie cookie = Cookie.make("userEmail", parsed.get("email"));
+            Cookie cookie = Cookie.make("userId", user.get().getId());
             cookie.setHttpOnly(true);
             cookie.setMaxAge(300);
             setCookie(exchange, cookie);

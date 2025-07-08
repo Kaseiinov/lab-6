@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<#import "layout.ftlh" as main>
+<@main.layout>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Thank you!!</title>
-    <link rel="stylesheet" href="css/candidates.css">
-</head>
-
-<body>
     <div class="container-my flex flex-col align-center">
     <h1>${candidate.name} Thank you for your vote!</h1>
     <main class="flex flex-wrap align-center">
@@ -24,6 +17,4 @@
     <a class="back flex align-center" href="/votes">Show total votes</a>
 
     </div>
-</body>
-
-</html>
+</@main.layout>

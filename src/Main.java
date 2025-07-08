@@ -1,9 +1,9 @@
-import server.controller.UserController;
+import server.controller.VoterController;
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        new UserController("localhost", 8080).start();
+        new VoterController("localhost", 8080).start();
     }
 }
