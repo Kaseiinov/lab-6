@@ -25,8 +25,6 @@ public class FileUtils {
 
             if (candidatesArray != null) {
                 candidates = new ArrayList<>(List.of(candidatesArray));
-                AtomicInteger counter = new AtomicInteger(1);
-                candidates.forEach(candidate -> candidate.setId(String.valueOf(counter.getAndIncrement())));
             }
         } catch (IOException e) {
             e.printStackTrace();

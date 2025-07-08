@@ -12,17 +12,17 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private List<Candidate> votes = new ArrayList<>();
+    private List<Candidate> votes;
 
     public User() {}
 
-    public User(Long id, String firstName, String lastName, String email, String password, List<Candidate> votes) {
+    public User(Long id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.votes = votes;
+        this.votes = new ArrayList<>();
     }
 
     public List<Candidate> getVotes() {
@@ -42,7 +42,7 @@ public class User {
     }
 
     public void addCandidate(Candidate candidate) {
-        votes.add(candidate);
+        this.votes.add(candidate);
     }
 
     public static void addUser(User user){

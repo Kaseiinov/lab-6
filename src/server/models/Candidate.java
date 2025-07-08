@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Candidate {
-    private String id;
+    private Long id;
     private String name;
     private String photo;
     private int votes;
     private double percentage;
-    private List<User> voter = new ArrayList<>();
+    private List<User> voter;
 
-    public Candidate(String name, String photo, int votes) {
-        this.id += 1;
+    public Candidate(Long id, String name, String photo, int votes) {
+        this.id = id;
         this.name = name;
         this.photo = photo;
         this.votes = votes;
+        this.voter = new ArrayList<>();
     }
 
     public void calculatePercentage(List<Candidate> allCandidates) {
@@ -52,11 +53,11 @@ public class Candidate {
         this.percentage = percentage;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -100,7 +101,6 @@ public class Candidate {
                 ", photo='" + photo + '\'' +
                 ", votes=" + votes +
                 ", percentage=" + percentage +
-                ", voter=" + voter +
                 '}';
     }
 }

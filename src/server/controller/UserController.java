@@ -28,7 +28,7 @@ public class UserController extends BasicServer {
 
 
     private void logoutHandler(HttpExchange exchange){
-        exchange.getResponseHeaders().add("Set-Cookie", "userEmail=; Max-Age=0; Path=/");
+        exchange.getResponseHeaders().add("Set-Cookie", "userId=; Max-Age=0; Path=/");
         redirect(exchange, "/login");
     }
 
@@ -84,7 +84,6 @@ public class UserController extends BasicServer {
         if (user.get().getPassword().equals(parsed.get("user-password"))) {
             Cookie cookie = Cookie.make("userId", user.get().getId());
             cookie.setHttpOnly(true);
-            cookie.setMaxAge(300);
             setCookie(exchange, cookie);
 
             redirect(exchange, "/");

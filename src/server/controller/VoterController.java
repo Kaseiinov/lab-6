@@ -19,6 +19,7 @@ public class VoterController extends UserController {
         registerGet("/thankyou", this::thankYouHandler);
         registerGet("/votes", this::votesHandler);
         candidateList = FileUtils.readFile();
+        candidateList.forEach(System.out::println);
     }
 
     private void voteHandler(HttpExchange exchange) {
@@ -34,23 +35,23 @@ public class VoterController extends UserController {
 
         String stringQuery = exchange.getRequestURI().getQuery();
         Map<String, String> params = Utils.parseUrlEncoded(stringQuery, "&");
-        String canId = params.get("candidateId");
+        Long canId = Long.valueOf(params.get("candidateId"));
 
         String stringCookie = getCookie(exchange);
-        Map<String, String> cookieParams = Utils.parseUrlEncoded(stringCookie, "&");
-        String userEmail = cookieParams.get("userId");
-        System.out.println(userEmail);
 
-        User user = User.getUsers()
-                .stream()
-                .filter(u -> u.getEmail().equals(userEmail))
-                .findFirst()
-                .orElse(null);
-
-        if(user == null) {
+        if(stringCookie.isEmpty()) {
             redirect(exchange, "/login");
             return;
         }
+
+        Map<String, String> cookieParams = Utils.parseUrlEncoded(stringCookie, "&");
+        Long userId = Long.valueOf(cookieParams.get("userId"));
+
+        User user = User.getUsers()
+                .stream()
+                .filter(u -> u.getId().equals(userId))
+                .findFirst()
+                .orElse(null);
 
         addVotes(canId);
 
@@ -61,11 +62,20 @@ public class VoterController extends UserController {
                 .orElse(null);
 
         if(candidate == null) {
-            sendError(exchange, "Condidate not found");
+            sendError(exchange, "Candidate not found");
             return;
         }
+//        if (user != null) {
+//            System.out.println("Before candidate.addVoters(user)");
+//            candidate.addVoters(user);
+//            System.out.println("After candidate.addVoters(user)");
+//
+//            System.out.println("Before user.addCandidate(candidate)");
+//            user.addCandidate(candidate);
+//            System.out.println("After user.addCandidate(candidate)");
+//        }
 
-//        candidate.setVoter(user);
+
 
         data.put("candidate", candidate);
         System.out.println(candidate);
@@ -86,7 +96,7 @@ public class VoterController extends UserController {
         renderTemplate(exchange, "/votes.ftlh", data);
     }
 
-    private void addVotes(String canId) {
+    private void addVotes(Long canId) {
         candidateList
                 .stream()
                 .filter(can -> can.getId().equals(canId))
